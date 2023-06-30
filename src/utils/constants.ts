@@ -1,0 +1,5 @@
+export const JWT_BEARER_SWAGGER_AUTH_NAME = 'JWT-auth';
+
+export const DEFAULT_PAGINATION_PAGE = 1;
+export const DEFAULT_PAGINATION_LIMIT = 30;
+export const PAGINATION_MAX_LIMIT = 50;
