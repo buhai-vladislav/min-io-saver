@@ -1,11 +1,11 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { HttpException } from '@nestjs/common/exceptions';
 import { CreateUserDTO } from '../dtos/CreateUser';
 import { AuthUtils } from '../utils/AuthUtils';
 import { User } from '../db/models/User';
 import { LoginDTO } from '../dtos/Login';
 import { IJwtPayload } from '../types/JwtPayload';
-import { HttpException } from '@nestjs/common/exceptions';
 import { ISigininResponse } from '../types/SigninResponse';
 import { throwError } from '../utils/Utils';
 import { UserPassLess } from '../types/User';
@@ -64,7 +64,7 @@ export class AuthService {
     );
 
     if (isPasswordValid) {
-      const { password, ...validatedUser } = user; // Remove password property from result
+      const { password: _, ...validatedUser } = user; // Remove password property from result
 
       return validatedUser;
     }
