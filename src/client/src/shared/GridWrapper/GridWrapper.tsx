@@ -12,7 +12,7 @@ export const GridWrapper: FC<IGridWrapperProps> = ({
 }) => {
   return (
     <Grid.Container
-      css={{ minHeight: '550px', ...css }}
+      css={{ height: 'calc(100vh - 76px)', ...css }}
       alignContent="center"
       justify="center"
       className={className}
