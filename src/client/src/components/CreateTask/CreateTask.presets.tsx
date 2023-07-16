@@ -16,6 +16,10 @@ export const CreateTaskWrapper = styled('form', {
   },
   label: {
     width: '100%',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    maxWidth: '260px',
+    whiteSpace: 'nowrap',
   },
   '#file': {
     display: 'none',
