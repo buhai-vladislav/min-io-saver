@@ -1,8 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDTO } from 'src/dtos/CreateUser';
-import { UserService } from './User';
-import { Response } from 'express';
 import { AuthUtils } from 'src/utils/AuthUtils';
 import { User } from 'src/db/models/User';
 import { LoginDTO } from 'src/dtos/Login';
@@ -11,6 +9,7 @@ import { HttpException } from '@nestjs/common/exceptions';
 import { ISigininResponse } from 'src/types/SigninResponse';
 import { throwError } from 'src/utils/Utils';
 import { UserPassLess } from 'src/types/User';
+import { UserService } from './User';
 
 @Injectable()
 export class AuthService {
@@ -83,15 +82,20 @@ export class AuthService {
     try {
       const validatedUser = await this.validateUser(loginDto);
 
-      if (validatedUser !== null) {
-        const { id: userId, email } = validatedUser;
-        const payload: IJwtPayload = { userId, email };
-
-        const token = this.signToken(payload);
-        const user: UserPassLess = validatedUser;
-
-        return { user, token };
+      if (!validatedUser) {
+        throw new HttpException(
+          'Login or password is not correct.',
+          HttpStatus.UNAUTHORIZED,
+        );
       }
+
+      const { id: userId, email } = validatedUser;
+      const payload: IJwtPayload = { userId, email };
+
+      const token = this.signToken(payload);
+      const user: UserPassLess = validatedUser;
+
+      return { user, token };
     } catch (error) {
       throwError(error, HttpStatus.BAD_REQUEST);
     }
