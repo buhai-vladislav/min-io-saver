@@ -20,7 +20,8 @@
     "migration:gen": "npm run build &&  cross-var ts-node ./node_modules/typeorm/cli.js migration:generate src/db/migrations/$npm_config_name -d ./ormconfig.ts",
     "migration:create": "cross-var ts-node ./node_modules/typeorm/cli.js migration:create src/db/migrations/$npm_config_name",
     "migration:latest": "npm run build && ts-node ./node_modules/typeorm/cli.js migration:run -d ./ormconfig.ts",
-    "migration:rollback": "ts-node ./node_modules/typeorm/cli.js migration:revert -d ./ormconfig.ts"
+    "migration:rollback": "ts-node ./node_modules/typeorm/cli.js migration:revert -d ./ormconfig.ts",
+    "serve": "cd src/client && npm run build && cd ../../ && npm run start"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
