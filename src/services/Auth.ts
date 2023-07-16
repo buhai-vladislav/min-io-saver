@@ -1,14 +1,14 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDTO } from 'src/dtos/CreateUser';
-import { AuthUtils } from 'src/utils/AuthUtils';
-import { User } from 'src/db/models/User';
-import { LoginDTO } from 'src/dtos/Login';
-import { IJwtPayload } from 'src/types/JwtPayload';
+import { CreateUserDTO } from '../dtos/CreateUser';
+import { AuthUtils } from '../utils/AuthUtils';
+import { User } from '../db/models/User';
+import { LoginDTO } from '../dtos/Login';
+import { IJwtPayload } from '../types/JwtPayload';
 import { HttpException } from '@nestjs/common/exceptions';
-import { ISigininResponse } from 'src/types/SigninResponse';
-import { throwError } from 'src/utils/Utils';
-import { UserPassLess } from 'src/types/User';
+import { ISigininResponse } from '../types/SigninResponse';
+import { throwError } from '../utils/Utils';
+import { UserPassLess } from '../types/User';
 import { UserService } from './User';
 
 @Injectable()
