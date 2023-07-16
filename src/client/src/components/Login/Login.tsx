@@ -4,17 +4,15 @@ import { useLoginMutation } from '../../store/api/main.api';
 import { useAppDispatch } from '../../store/hooks/hooks';
 import { setUser } from '../../store/reduser/user';
 import { object, string } from 'yup';
-import { ToastOptions } from 'react-toastify';
-import {
-  AUTH_INPUT_WIDTH,
-  USER_NOT_FOUND_MESSAGE,
-} from '../../utils/constants';
+import { AUTH_INPUT_WIDTH } from '../../utils/constants';
 
 import type { ILoginFormProps } from './Login.props';
 import { FormWrapper } from '../../shared';
 import { useNavigate } from 'react-router-dom';
 import { IMutation } from '../../types/Mutation';
 import { ISignInResponse } from '../../types/SignUp';
+import { useErrorToast } from '../../hooks/useErrorToast';
+import { HttpStatus } from '../../types/HttpStatus';
 
 const ValidationSchema = object({
   email: string().required('Email is required').email('Is not an email format'),
@@ -25,11 +23,6 @@ export const Login = () => {
   const [login, { isLoading, error }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const toastOptions: ToastOptions = {
-    position: 'bottom-center',
-    type: 'error',
-  };
 
   const onSubmit = async ({ email, password }: ILoginFormProps) => {
     const response: IMutation<ISignInResponse> = await login({
@@ -56,18 +49,21 @@ export const Login = () => {
     validateOnChange: true,
   });
 
-  /* const errorItems: IErrorItem[] = [
+  useErrorToast(
+    error,
+    [
+      {
+        status: HttpStatus.NOT_FOUND,
+      },
+      {
+        status: HttpStatus.UNAUTHORIZED,
+      },
+    ],
     {
-      status: HttpStatus.NOT_FOUND,
-      errorMessage: USER_NOT_FOUND_MESSAGE,
+      position: 'bottom-center',
+      type: 'error',
     },
-    {
-      status: HttpStatus.UNAUTHORIZED,
-      errorMessage: USER_NOT_FOUND_MESSAGE,
-    },
-  ];
-
-  useErrorToast(error, errorItems, toastOptions); */
+  );
 
   return (
     <FormWrapper onSubmit={formik.handleSubmit}>
