@@ -9,15 +9,17 @@ export const throwError = (
   defaultMessage?: string,
 ) => {
   let message = defaultMessage ?? 'Something went wrong!';
+  let statusCode;
 
   if (error instanceof HttpException) {
     message = error.message;
+    statusCode = error?.getStatus();
   }
   if (typeof error === 'string') {
     message = error;
   }
 
-  throw new HttpException(message, status);
+  throw new HttpException(message, statusCode ?? status);
 };
 
 export const getPaginationLimit = (outerLimit: number): number => {
