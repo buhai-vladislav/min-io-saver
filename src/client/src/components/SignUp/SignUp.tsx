@@ -10,6 +10,8 @@ import type { IMutation } from '../../types/Mutation';
 import { useNavigate } from 'react-router-dom';
 import { FormWrapper } from '../../shared';
 import { IUser } from '../../types/User';
+import { useErrorToast } from '../../hooks/useErrorToast';
+import { HttpStatus } from '../../types/HttpStatus';
 
 const ValidationSchema = object({
   fullname: string().required('Fullname is required.'),
@@ -53,11 +55,11 @@ export const SignUp = () => {
     type: 'error',
   };
 
-  /* const errorItems: IErrorItem[] = [
-    { status: HttpStatus.CONFLICT, errorMessage: 'User already exsist' },
-  ];
-
-  useErrorToast(error, errorItems, toastOptions); */
+  useErrorToast(
+    error,
+    [{ status: HttpStatus.BAD_REQUEST }, { status: HttpStatus.CONFLICT }],
+    toastOptions,
+  );
 
   return (
     <FormWrapper onSubmit={formik.handleSubmit}>
